@@ -1,7 +1,7 @@
 # alco
 
 
-Application created with UI framework caled Flutter.
+Application created with UI framework called Flutter.
 
 It's a simple app with flawless animations.
 
