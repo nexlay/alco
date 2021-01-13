@@ -16,7 +16,7 @@ It's a simple app with flawless animations.
        Some interesting facts about alcohol.
 
        
-<img src="git_images/intro.jpg" width="300" height="550"/> <img src="git_images/home.jpg" width="300" height="550"/> <img src="git_images/about.jpg" width="300" height="550"/>
-<img src="git_images/facts.jpg" width="300" height="550"/> <img src="git_images/facts_1.jpg" width="300" height="550"/> <img src="git_images/contact.jpg" width="300" height="550"/>
+<img src="git_images/intro.jpg" width="300" height="650"/> <img src="git_images/home.jpg" width="300" height="650"/> <img src="git_images/about.jpg" width="300" height="650"/>
+<img src="git_images/facts.jpg" width="300" height="650"/> <img src="git_images/facts_1.jpg" width="300" height="650"/> <img src="git_images/contact.jpg" width="300" height="650"/>
 
 Application is in development stage.
