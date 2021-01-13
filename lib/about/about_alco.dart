@@ -19,6 +19,14 @@ class _AboutState extends State<About> {
     versionCode = packageInfo.buildNumber;
   }
 
+  @override
+  void initState() {
+    _getAppVersion();
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    super.initState();
+  }
+
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent - 250 &&
         !_controller.position.outOfRange) {
@@ -32,14 +40,6 @@ class _AboutState extends State<About> {
         _opacityLevel = 0.0;
       });
     }
-  }
-
-  @override
-  void initState() {
-    _getAppVersion();
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);
-    super.initState();
   }
 
   void _showAboutDialog() => showAboutDialog(

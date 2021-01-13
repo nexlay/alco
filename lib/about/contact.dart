@@ -1,6 +1,6 @@
 import 'package:alco/custom_icons/mfglabs_icons.dart';
 import 'package:flutter/material.dart';
-
+import 'package:share/share.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -104,12 +104,29 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _listTileInformation(Mfglabs.github_circled_alt, 'Github',
-                      'github.com/nexlay', 'https://github.com/nexlay'),
-                  _listTileInformation(Mfglabs.twitter, 'Twitter',
-                      'twitter.com/Nexlay', 'https://twitter.com/Nexlay'),
+                  _listTileInformation(
+                      Mfglabs.github_circled_alt,
+                      'Github',
+                      'github.com/nexlay',
+                      'https://github.com/nexlay',
+                      0,
+                      true),
+                  _listTileInformation(
+                      Mfglabs.twitter,
+                      'Twitter',
+                      'twitter.com/Nexlay',
+                      'https://twitter.com/Nexlay',
+                      0,
+                      true),
+                  _listTileInformation(
+                      Icons.mail,
+                      'example@gmail.com',
+                      'Email',
+                      'mailto: mmmmm@gmail.com?subject=Write a subject you interested in, please&body=',
+                      0,
+                      true),
                   _listTileInformation(Icons.share, 'Share Alco', '',
-                      'https://github.com/nexlay'),
+                      'https://github.com/nexlay', 1, true),
                   const SizedBox(
                     height: 80.0,
                   ),
@@ -149,8 +166,8 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
     );
   }
 
-  Widget _listTileInformation(
-      IconData icon, String title, String subtitle, String url) {
+  Widget _listTileInformation(IconData icon, String title, String subtitle,
+      String url, int type, bool hide) {
     return ListTile(
       leading: Icon(
         icon,
@@ -164,15 +181,24 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
           fontSize: 12.0,
         ),
       ),
-      trailing: TextButton(
-        onPressed: () {
-          _uriLauncher(url);
-        },
-        child: const Text(
-          'Check',
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: 12.0,
+      trailing: Visibility(
+        visible: hide,
+        child: TextButton(
+          onPressed: () {
+            if (type == 0) {
+              _uriLauncher(url);
+              return;
+            } else if (type == 1) {
+              Share.share('https://github.com/nexlay');
+              return;
+            }
+          },
+          child: Text(
+            type == 0 ? 'Check' : 'Share',
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontSize: 12.0,
+            ),
           ),
         ),
       ),
@@ -187,11 +213,18 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
           backgroundImage: AssetImage('image/contact.png'),
           radius: 40,
         ),
-        alertAnimation: FadeAlertAnimation,
+        alertAnimation: fadeAlertAnimation,
         content: Column(
           children: [
-            _listTileInformation(Icons.location_on, 'Location', 'Poland',
-                'https://www.google.com/maps/search/?api=1&query=Bolesławiec'),
+            _listTileInformation(
+                Icons.location_on,
+                'Poland',
+                'Location',
+                'https://www.google.com/maps/search/?api=1&query=Bolesławiec',
+                0,
+                true),
+            _listTileInformation(
+                Icons.show_chart, 'Beginner', 'Level', '', 0, false),
             TextButton(
               child: Text(
                 'OK',
@@ -206,7 +239,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
         buttons: []).show();
   }
 
-  Widget FadeAlertAnimation(BuildContext context, Animation<double> animation,
+  Widget fadeAlertAnimation(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     return Align(
       child: FadeTransition(

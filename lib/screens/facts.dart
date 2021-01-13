@@ -11,14 +11,36 @@ class Facts extends StatefulWidget {
 
 class _FactsState extends State<Facts> {
   bool _selected = false;
+  ScrollController _scrollController;
+  double _opacityLevel = 0.0;
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+
+    super.initState();
+  }
+
+  _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent - 250 &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        _opacityLevel = 1.0;
+      });
+    }
+    if (_scrollController.offset <=
+            _scrollController.position.minScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        _opacityLevel = 0.0;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white10,
-        centerTitle: true,
-        elevation: 0.0,
-      ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Show fact'),
         onPressed: () {
@@ -29,6 +51,43 @@ class _FactsState extends State<Facts> {
           });
         },
       ),
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return NestedScrollView(
+      controller: _scrollController,
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return [
+          SliverAppBar(
+            leading: AnimatedOpacity(
+              duration: Duration(seconds: 1),
+              opacity: _opacityLevel,
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            pinned: true,
+            expandedHeight: 150.0,
+            backgroundColor: Colors.white10,
+            elevation: 0.0,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text(
+                'Facts',
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ),
+        ];
+      },
       body: Center(
         child: AnimatedCrossFade(
           duration: Duration(seconds: 1),

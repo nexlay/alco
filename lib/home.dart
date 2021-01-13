@@ -315,6 +315,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.black,
                     fontSize: 14.0,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ),
